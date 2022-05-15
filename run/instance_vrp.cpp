@@ -4,9 +4,10 @@
 
 using namespace std;
 
-Instance_vrp::Instance_vrp(std::string linkFileInstance_vrp) {
+Instance_vrp::Instance_vrp(std::string linkFileInstance_vrp, double time) {
     read_input(linkFileInstance_vrp);
     initialize();
+    time_limit = time;
     cout << "Done loading !" << endl;
 }
 
@@ -69,7 +70,7 @@ void Instance_vrp::read_input(const string &linkFileInstance_vrp) {
     cout << "number_truck: ";
     cin >> number_truck;
     // so khach hang phuc vu max = sokhach/soxe + 2
-    number_client = ceil((demension-1) / number_truck) + 2;
+    number_client = ceil((demension - 1) / number_truck) + 2;
 
     cout << "number_truck " << number_truck << endl;
     cout << "number_client " << number_client << endl;
@@ -91,10 +92,14 @@ void Instance_vrp::initialize() {
 double Instance_vrp::getDistance(int i, int j) {
     return dist_matrix[i][j];
 }
+double Instance_vrp::getTimelimit() {
+    return time_limit;
+}
+
 void Instance_vrp::show_position_custom() {
     std::cout << "Position:\nid: x - y - demand\n";
     for (int i = 0; i < x.size(); ++i) {
-        std::cout << i << ": " << x[i] << " - " << y[i] << " - "<< demand[i] << "\n";
+        std::cout << i << ": " << x[i] << " - " << y[i] << " - " << demand[i] << "\n";
     }
     std::cout << "================================\n";
 }

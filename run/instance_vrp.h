@@ -14,13 +14,15 @@ class Instance_vrp {
     std::vector<double> demand;
     int number_truck;
     vector<vector<double>> dist_matrix;
+    double time_limit;
 
    public:
     int number_client;
     Instance_vrp();
-    Instance_vrp(std::string linkFileInstance_vrp);
+    Instance_vrp(std::string linkFileInstance_vrp, double time);
     double getDistance(int i, int j);
     void show_position_custom();
+    double getTimelimit();
 
    protected:
     void initialize();

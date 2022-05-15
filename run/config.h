@@ -1,11 +1,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
+using namespace std;
 
-class Config
-{
-public:
+class Config {
+   public:
     string input;
     bool found_input = false;
 
@@ -25,19 +24,15 @@ public:
                 found_input = true;
             }
 
-            else
-            if (key == "-t") {
+            else if (key == "-t") {
                 string value = argv[++i];
                 time_limit = stof(value);
                 found_time_limit = true;
-            }
-            else
-            if (key == "-it") {
+            } else if (key == "-it") {
                 string value = argv[++i];
                 max_iter = stoi(value);
                 found_max_iter = true;
-            }
-            else {
+            } else {
                 cerr << "Invalid argument !!!\n";
                 exit(0);
             }
@@ -49,7 +44,7 @@ public:
         }
 
         if (!found_time_limit) {
-    //	    cout << "Warning: time_limit default = 30.0s\n";
+            //	    cout << "Warning: time_limit default = 30.0s\n";
         }
         if (!found_max_iter) {
             cout << "Warning: max_iter default = 50,000 iterations\n";
@@ -58,4 +53,4 @@ public:
     }
 };
 
-#endif // CONFIG_H
+#endif  // CONFIG_H

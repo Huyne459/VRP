@@ -24,11 +24,10 @@ class Solution_vrp {
     Solution_vrp& operator=(const Solution_vrp& s);
 
     vector<double> getTotalDistance();
-    void Solution_vrpV();
+    void Solution_vrpH();
     void print();
     int Point_near(int id_point);
     int Point_far();
-    int Point_random();
     vector<vector<int>> getTours();
     double getMaxDistance();
     vector<vector<double>> dist_subTour(vector<int> id_node_subTour);
@@ -36,4 +35,6 @@ class Solution_vrp {
     void setDistanceSubTour(int index_tour, double distance_);
     void setMaxDistance();
     int getIndexMaxdistance();
+
+    // void insertNode(vector<int> s, int node, int position);
 };

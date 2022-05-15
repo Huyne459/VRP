@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 
 #include "instance_vrp.h"
+#include "utils.h"
 
 Solution_vrp::Solution_vrp() {
     tours = {{0, 0}};
@@ -97,15 +98,7 @@ int Solution_vrp::Point_far() {
     return index;
 }
 
-int Solution_vrp::Point_random() {
-    int index = 0;
-    while (index == 0 || flag_point[index]) {
-        index = rand() % instance->demension;
-    }
-    return index;
-}
-
-void Solution_vrp::Solution_vrpV() {
+void Solution_vrp::Solution_vrpH() {
     int count_cust = instance->demension;
     // int id_begin = 0;
 
@@ -145,6 +138,62 @@ void Solution_vrp::Solution_vrpV() {
     maxDistance = getMaxDistance();
     print();
 }
+// void Solution_vrp::Solution_vrpV() {
+//     vector<int> danhsachNode;
+//     int k;
+//     k = 0;
+//     int count_cust = instance->demension;
+//     for (int i = 1; i < instance->demension; ++i) {
+//         danhsachNode.push_back(i);
+//     }
+
+//     Utils::shuffle(danhsachNode);
+
+//     for (int i = 0; i < number_tour; i++) {
+//         for (int j = 0; j < instance->number_client - 2; j++) {
+//             int h;
+//             h = j + k;
+//             if (h > danhsachNode.size()) {
+//                 break;
+//             }
+//             // cout << "k : " << k << "\n";
+//             int node = danhsachNode[h];
+//             int bestPosition = -1;
+//             double bestCost = 1e5;
+//             // cout << tours[i].size() << "\n";
+//             double min_distance = 10e5;
+//             // for (int t_l = 0; t_l < number_tour; t_l++) {
+//             //     if (min_distance > totalDistance[t_l]) {
+//             //         i = t_l;
+//             //     }
+//             // }
+//             for (int position = 1; position < tours[i].size() + 1; ++position) {
+//                 double cost_gain = instance->getDistance(position - 1, node) + instance->getDistance(node, position) - instance->getDistance(position - 1, position);
+//                 // cout << "cost_gain :" << cost_gain << "\n";
+//                 if (cost_gain < bestCost) {
+//                     bestPosition = position;
+//                     bestCost = cost_gain;
+//                 }
+//             }
+
+//             totalDistance[i] += instance->dist_matrix[bestPosition - 1][node] + instance->dist_matrix[node][bestPosition] - instance->dist_matrix[bestPosition - 1][bestPosition];
+//             tours[i].insert(tours[i].begin() + bestPosition, node);
+//         }
+//         k = k + ceil((instance->demension - 1) / instance->number_truck);
+//         cout << "k : +" << k << "\n";
+//     }
+
+//     // cout << "df\n";
+
+//     for (int i = 0; i < number_tour; i++) {
+//         tours[i].push_back(0);
+//         demain_tour[i] += instance->demand[0];
+//         totalDistance[i] += instance->dist_matrix[tours[i].size() - 2][0];
+//     }
+//     maxDistance = getMaxDistance();
+
+//     print();
+// }
 
 double Solution_vrp::getMaxDistance() {
     maxDistance = totalDistance[0];
@@ -163,21 +212,8 @@ vector<vector<double>> Solution_vrp::dist_subTour(vector<int> id_node_subTour) {
     }
     int index = 0;
 
-    // for (auto i : id_node_subTour) {
-    //     // cout << id_node_subTour[2];
-    //     for (auto j : id_node_subTour) {
-    //         // cout << instance->dist_matrix[1][2] << "khoong casu bnafy k chayj";
-    //         dist_[index].push_back(instance->dist_matrix[i][j]);
-    //     }
-    //     index++;
-    // }
-    // cout << instance->getDistance(0, 0) << "\n";
-    // cout << instance->dist_matrix[2][3] << "--------\n";
-
     for (int i = 0; i < id_node_subTour.size() - 1; i++) {
         for (int j = 0; j < id_node_subTour.size() - 1; j++) {
-            // cout << "1233546\n";
-            // cout << id_node_subTour[i + 2] << " - " << id_node_subTour[j + 3] << "\n";
             dist_[index].push_back(instance->dist_matrix[id_node_subTour[i]][id_node_subTour[j]]);
         }
         index++;

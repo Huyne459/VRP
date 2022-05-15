@@ -2,7 +2,7 @@
 
 Solver::Solver(Instance *instance) : instance(instance) {
     cooling_rate = 0.996;
-    threshold = 0.2;  //
+    threshold = 0.20;  //
 }
 
 void Solver::solution_construction() {
@@ -17,7 +17,7 @@ void Solver::solution_construction() {
 
 void Solver::solve() {
     solution_construction();
-    for (int iter = 0; iter < 1000; ++iter) {
+    for (int iter = 0; iter < 100; ++iter) {
         Solution s = *currentSol;
         // Mutate
         mutate(&s);

@@ -16,7 +16,7 @@ void Solver_VRP::solution_construction() {
     // nearestHeuristic(bestSol);
     //    cheapestHeuristic(bestSol);
     // cout << instance->getDistance(3, 6) << " - distance 3-6 \n";
-    bestSol->Solution_vrpV();
+    bestSol->Solution_vrpH();
     // bestSol->getTotalDistance();
 
     *currentSol = *bestSol;
@@ -74,8 +74,15 @@ double Solver_VRP::getMaxDistanceTour() {
 }
 
 void Solver_VRP::local_search(Solution_vrp *s) {
+    auto startTime = chrono::high_resolution_clock::now();
     bool improved = true;
     while (improved) {
+        {
+            auto now = chrono::high_resolution_clock::now();
+            double runtime = chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+            runtime = runtime / 1000;
+            if (runtime > (instance->getTimelimit()) / 3) break;
+        }
         improved = false;
         LS_relocate(s, improved);
         LS_swap(s, improved);
@@ -86,10 +93,18 @@ void Solver_VRP::local_search(Solution_vrp *s) {
 }
 
 void Solver_VRP::LS_swap(Solution_vrp *s, bool &improved) {
+    auto startTime = chrono::high_resolution_clock::now();
+
 here:
 
     int i = s->getIndexMaxdistance();
     for (int j = 0; j < s->getTours().size(); ++j) {
+        {
+            auto now = chrono::high_resolution_clock::now();
+            double runtime = chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+            runtime = runtime / 1000;
+            if (runtime > (instance->getTimelimit()) / 3) break;
+        }
         if (i == j) continue;
         vector<int> tour_i = s->getTours()[i];
         vector<int> tour_j = s->getTours()[j];
@@ -136,9 +151,16 @@ here:
 }
 
 void Solver_VRP::LS_relocate(Solution_vrp *s, bool &improved) {
+    auto startTime = chrono::high_resolution_clock::now();
 here:
     int i = s->getIndexMaxdistance();
     for (int j = 0; j < s->getTours().size(); ++j) {
+        {
+            auto now = chrono::high_resolution_clock::now();
+            double runtime = chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+            runtime = runtime / 1000;
+            if (runtime > (instance->getTimelimit()) / 3) break;
+        }
         if (i == j) continue;
         vector<int> tour_i_ = s->getTours()[i];
         vector<int> tour_j_ = s->getTours()[j];
